@@ -2,6 +2,11 @@ name: Deploy to github pages
 on:
   repository_dispatch:
     types: deploy
+    inputs:
+      name:
+        description: "Do a partial rebuild"
+        required: false
+        default: "true"
   push:
     branches:
       - master
@@ -39,6 +44,9 @@ jobs:
       - name: Install wasm-pack
         working-directory: ./site
         run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      
+      - name: John Test
+        run: echo "Hello ${{ github.event.inputs.deploy }}!"
 
       - name: Run deploy script
         working-directory: ./site
