@@ -3,7 +3,7 @@ on:
   repository_dispatch:
     types: deploy
     inputs:
-      name:
+      deploy:
         description: "Do a partial rebuild"
         required: false
         default: "true"
