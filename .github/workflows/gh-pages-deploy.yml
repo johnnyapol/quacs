@@ -2,6 +2,11 @@ name: Deploy to github pages
 on:
   repository_dispatch:
     types: deploy
+    inputs:
+      name:
+        description: "Do a partial rebuild"
+        required: false
+        default: "true"
   push:
     branches:
       - master
@@ -24,7 +29,7 @@ jobs:
         with:
           python-version: '3.x'
       - name: John Test
-        run: echo "Hello ${{env.GITHUB_EVENT_NAME}}"
+        run: echo "Hello ${{ github.event.inputs.deploy }}!"
 
       - name: Checkout site repo
         uses: actions/checkout@v2
