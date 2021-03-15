@@ -3,7 +3,7 @@ on:
   repository_dispatch:
     types: deploy
     inputs:
-      deploy:
+      deploy2:
         description: "Do a partial rebuild"
         required: false
         default: "true"
@@ -29,7 +29,7 @@ jobs:
         with:
           python-version: '3.x'
       - name: John Test
-        run: echo "Hello ${{ github.event.inputs.deploy }}!"
+        run: echo "Hello ${{ github.event.inputs.deploy2 }}!"
 
       - name: Checkout site repo
         uses: actions/checkout@v2
