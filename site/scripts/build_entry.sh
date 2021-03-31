@@ -37,7 +37,11 @@ fi
 if test "$DIFF_BUILD" != "true"; then
 	DIRECTORIES=$(find src/store/data/semester_data/* -type d -print0 -maxdepth 0 | xargs -0)
 else
-	DIRECTORIES=$(git -C src/store/data/ diff --name-only HEAD~1 HEAD | grep semester_data | tr "/" "\n" | grep [0-9] | sort -u)
+	HASH=$(cat "gh-pages-site/.datahash")
+	if test "$HASH" == ""; then
+		HASH="HEAD~1"
+	fi
+	DIRECTORIES=$(git -C src/store/data/ diff --name-only $HASH HEAD | grep semester_data | tr "/" "\n" | grep [0-9] | sort -u)
 fi
 
 # We're trying to build all semesters, just do it back to back
