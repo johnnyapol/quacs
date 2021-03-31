@@ -24,7 +24,12 @@ cp scripts/service-worker.js gh-pages-site/service-worker.js
 cp LICENSE gh-pages-site/LICENSE
 echo ${CNAME} >gh-pages-site/CNAME
 
-yarn ${ACTION} ${BUILD_ARGS} -a -o gh-pages-site || exit 1
+HASH=$(cat "gh-pages-site/.datahash")
+if test "$HASH" == ""; then
+	HASH="HEAD~1"
+fi
+
+yarn ${ACTION} ${BUILD_ARGS} -a -o gh-pages-site -h ${HASH} || exit 1
 
 git -C gh-pages-site add --all || exit 1
 git -C gh-pages-site commit -m "$(date -u)" || { echo "No site changes to commit!"; exit 0; }
